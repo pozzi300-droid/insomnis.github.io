@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from '../lib/gsap';
 import { Locale, StoreItem } from '../types';
 import { translations } from '../data/translations';
+import { getAssetUrl } from '../utils/assets';
 
 interface StoreSectionProps {
   locale: Locale;
@@ -157,7 +158,7 @@ export const StoreSection: React.FC<StoreSectionProps> = ({ locale, onSelectPlan
       {/* Background with landing_3.jpg */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/main/landing_3.jpg"
+          src={getAssetUrl('/images/main/landing_3.jpg')}
           alt=""
           className="w-full h-full object-cover object-center opacity-[0.15] select-none pointer-events-none"
         />

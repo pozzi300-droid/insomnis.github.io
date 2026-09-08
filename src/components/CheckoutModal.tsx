@@ -3,6 +3,7 @@ import { X, ArrowRight } from 'lucide-react';
 import { gsap } from '../lib/gsap';
 import { StoreItem, User, Locale } from '../types';
 import { translations } from '../data/translations';
+import { getAssetUrl } from '../utils/assets';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -30,15 +31,15 @@ const paymentRegions = [
   {
     regionKey: 'regionRu',
     methods: [
-      { id: 'RU_MIR', label: 'МИР', logo: '/images/cabinet/mir.webp' },
-      { id: 'RU_SBP', label: 'СБП', logo: '/images/cabinet/sbp.svg' },
+      { id: 'RU_MIR', label: 'МИР', logo: getAssetUrl('/images/cabinet/mir.webp') },
+      { id: 'RU_SBP', label: 'СБП', logo: getAssetUrl('/images/cabinet/sbp.svg') },
     ],
   },
   {
     regionKey: 'regionEu',
     methods: [
-      { id: 'EU_VISA', label: 'Visa / MC', logo: '/images/cabinet/visaMaster.png' },
-      { id: 'CRYPTO_BOT', label: 'Crypto Bot', logo: '/images/cabinet/crypto_bot.jpg' },
+      { id: 'EU_VISA', label: 'Visa / MC', logo: getAssetUrl('/images/cabinet/visaMaster.png') },
+      { id: 'CRYPTO_BOT', label: 'Crypto Bot', logo: getAssetUrl('/images/cabinet/crypto_bot.jpg') },
     ],
   },
 ];
@@ -194,7 +195,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Blurred background image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img
-            src="/images/main/landing_1.jpg"
+            src={getAssetUrl('/images/main/landing_1.jpg')}
             alt=""
             className="w-full h-full object-cover object-[center_40%] scale-[1.02]"
             style={{ filter: 'blur(20px)' }}
@@ -215,7 +216,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <div className="absolute left-5 top-1/2 -translate-y-1/2 h-[490px] max-h-[490px] w-[320px] overflow-hidden rounded-[25px] z-20 hidden md:block [backface-visibility:hidden]">
           <div className="relative h-full w-full min-w-0 overflow-hidden rounded-[25px]">
             <img
-              src="/images/main/landing_1.jpg"
+              src={getAssetUrl('/images/main/landing_1.jpg')}
               alt=""
               className="w-full h-full object-cover scale-[1.05]"
             />

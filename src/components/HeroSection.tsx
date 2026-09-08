@@ -3,6 +3,7 @@ import { gsap } from '../lib/gsap';
 import { DeltaLogo } from './DeltaLogo';
 import { Locale } from '../types';
 import { translations } from '../data/translations';
+import { getAssetUrl } from '../utils/assets';
 
 interface HeroSectionProps {
   locale: Locale;
@@ -130,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image with Ken Burns zoom animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="/images/main/landing_1.jpg"
+          src={getAssetUrl('/images/main/landing_1.jpg')}
           alt="Insomnis Minecraft Server"
           className="w-full h-full object-cover object-[center_40%] animate-ken-burns select-none pointer-events-none"
         />

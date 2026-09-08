@@ -3,6 +3,7 @@ import { Users, Server } from 'lucide-react';
 import { gsap } from '../lib/gsap';
 import { Locale } from '../types';
 import { translations } from '../data/translations';
+import { getAssetUrl } from '../utils/assets';
 
 interface GeographySectionProps {
   locale: Locale;
@@ -18,7 +19,7 @@ export const GeographySection: React.FC<GeographySectionProps> = ({ locale }) =>
     {
       name: 'FunTime',
       note: t.geography.funTimeNote,
-      image: '/images/cabinet/funTime.jpg',
+      image: getAssetUrl('/images/cabinet/funTime.jpg'),
       online: '12 850+',
       ip: 'mc.funtime.su',
       accent: '#0abab5',
@@ -26,7 +27,7 @@ export const GeographySection: React.FC<GeographySectionProps> = ({ locale }) =>
     {
       name: 'HolyWorld',
       note: t.geography.holyWorldNote,
-      image: '/images/cabinet/holyWorld.png',
+      image: getAssetUrl('/images/cabinet/holyWorld.png'),
       online: '8 420+',
       ip: 'mc.holyworld.ru',
       accent: '#6E8AFF',
@@ -34,7 +35,7 @@ export const GeographySection: React.FC<GeographySectionProps> = ({ locale }) =>
     {
       name: 'SpookyTime',
       note: t.geography.spookyTimeNote,
-      image: '/images/cabinet/spookyTime.jpeg',
+      image: getAssetUrl('/images/cabinet/spookyTime.jpeg'),
       online: '5 190+',
       ip: 'play.spookytime.net',
       accent: '#B088FF',
