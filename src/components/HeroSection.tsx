@@ -196,14 +196,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 if (elem) elem.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-semibold text-white bg-[#0abab5] hover:bg-[#099e9a] active:scale-[0.98] transition-all duration-200 hover:shadow-[0_0_30px_rgba(10, 186, 181,0.35)] cursor-pointer"
+            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] active:scale-[0.98] transition-all duration-200 hover:shadow-[0_0_30px_rgba(10, 186, 181,0.35)] cursor-pointer"
           >
             {t.hero.ctaPrimary}
           </button>
 
           <button
             onClick={onOpenDocs}
-            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-medium text-white/40 hover:text-white/80 active:scale-[0.98] border border-white/[0.09] bg-white/[0.03] hover:bg-white/[0.07] hover:border-white/[0.15] backdrop-blur-2xl transition-all duration-200 cursor-pointer"
+            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-bold tracking-tight text-white/50 hover:text-white active:scale-[0.98] border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.2] backdrop-blur-2xl transition-all duration-200 cursor-pointer"
           >
             {t.hero.ctaSecondary}
           </button>

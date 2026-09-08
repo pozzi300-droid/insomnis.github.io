@@ -78,7 +78,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
                 if (onGoToStore) onGoToStore();
                 else scrollTo('store');
               }}
-              className="btn-shimmer group relative flex items-center gap-2 px-7 py-3.5 rounded-2xl text-[14px] font-semibold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-300 hover:shadow-[0_0_50px_rgba(10, 186, 181,0.35)] cursor-pointer overflow-hidden"
+              className="btn-shimmer group relative flex items-center gap-2 px-7 py-3.5 rounded-2xl text-[14px] font-bold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-300 hover:shadow-[0_0_50px_rgba(10, 186, 181,0.35)] cursor-pointer overflow-hidden"
             >
               <span>{t.hero.ctaPrimary}</span>
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -158,25 +158,21 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
               {t.footer.navigation.title}
             </p>
             <div className="flex flex-col gap-2.5">
-              {t.footer.navigation.links?.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => {
-                    if (link.href?.includes('activity')) scrollTo('activity');
-                    else if (link.href?.includes('store')) scrollTo('store');
-                    else scrollTo('how-it-works');
-                  }}
-                  className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-                >
-                  {link.label}
-                </button>
-              ))}
-              <button
-                onClick={() => scrollTo('faq')}
-                className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-              >
-                FAQ
-              </button>
+              {t.footer.navigation.links
+                ?.filter((link) => !link.href?.includes('faq') && link.label?.toLowerCase() !== 'faq')
+                .map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => {
+                      if (link.href?.includes('activity')) scrollTo('activity');
+                      else if (link.href?.includes('store')) scrollTo('store');
+                      else scrollTo('how-it-works');
+                    }}
+                    className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
+                  >
+                    {link.label}
+                  </button>
+                ))}
               <button
                 onClick={onOpenDocs}
                 className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"

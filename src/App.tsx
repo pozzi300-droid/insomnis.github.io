@@ -3,7 +3,6 @@ import { Locale, StoreItem } from './types';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { StoreSection } from './components/StoreSection';
-import { FaqSection } from './components/FaqSection';
 import { HowItWorksSection } from './components/HowItWorksSection';
 import { FooterSection } from './components/FooterSection';
 import { RulesView } from './components/RulesView';
@@ -113,7 +112,6 @@ export default function App() {
               onOpenDocs={() => handleOpenRules()}
             />
             <StoreSection locale={locale} onSelectPlan={handleSelectPlan} />
-            <FaqSection locale={locale} />
             <HowItWorksSection locale={locale} />
           </main>
 

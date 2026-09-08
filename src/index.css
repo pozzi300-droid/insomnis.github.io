@@ -41,6 +41,10 @@
   font-family: 'SuisseIntl-Medium', system-ui, -apple-system, sans-serif !important;
 }
 
+button, [type="button"], [type="submit"], [role="button"] {
+  font-weight: 700;
+}
+
 body {
   background-color: #111216;
   color: #fafafa;

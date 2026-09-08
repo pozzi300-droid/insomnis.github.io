@@ -161,10 +161,6 @@ export const translations = {
             "href": "#store"
           },
           {
-            "label": "FAQ",
-            "href": "#faq"
-          },
-          {
             "label": "How to Join",
             "href": "#how-it-works"
           }
@@ -430,10 +426,6 @@ export const translations = {
             "href": "#store"
           },
           {
-            "label": "Частые вопросы",
-            "href": "#faq"
-          },
-          {
             "label": "Как начать",
             "href": "#how-it-works"
           }
@@ -697,10 +689,6 @@ export const translations = {
           {
             "label": "Товари",
             "href": "#store"
-          },
-          {
-            "label": "Часті питання",
-            "href": "#faq"
           },
           {
             "label": "Як почати",

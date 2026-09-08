@@ -278,10 +278,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                           key={meth.id}
                           type="button"
                           onClick={() => setSelectedMethod(meth.id)}
-                          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-display font-medium transition-all duration-200 cursor-pointer ${
+                          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-display font-bold transition-all duration-200 cursor-pointer ${
                             isActive
                               ? 'bg-[#0abab5]/15 text-[#0abab5] border border-[#0abab5]/30'
-                              : 'bg-white/[0.03] text-white/30 border border-white/[0.06] hover:text-white/50'
+                              : 'bg-white/[0.03] text-white/40 border border-white/[0.06] hover:text-white/70'
                           }`}
                         >
                           <img
@@ -320,10 +320,10 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                       key={opt.id}
                       type="button"
                       onClick={() => setSelectedOptionIndex(oIdx)}
-                      className={`relative flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-display font-medium transition-all duration-200 cursor-pointer ${
+                      className={`relative flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-display font-bold transition-all duration-200 cursor-pointer ${
                         isActive
                           ? 'bg-[#0abab5]/15 text-[#0abab5] border border-[#0abab5]/30'
-                          : 'bg-white/[0.03] text-white/30 border border-white/[0.06] hover:text-white/50'
+                          : 'bg-white/[0.03] text-white/40 border border-white/[0.06] hover:text-white/70'
                       }`}
                     >
                       <span>
@@ -402,14 +402,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               type="button"
               disabled={!agreed || isProcessing || isRedirecting}
               onClick={handlePurchase}
-              className={`w-full flex items-center justify-center py-3.5 rounded-[20px] font-display text-[14px] font-semibold text-white transition-all duration-300 bg-[#0abab5] hover:bg-[#30ded5] hover:shadow-[0_0_40px_rgba(10, 186, 181,0.2)] ${
+              className={`w-full flex items-center justify-center py-3.5 rounded-[20px] font-display text-[14px] font-bold text-white transition-all duration-300 bg-[#0abab5] hover:bg-[#30ded5] hover:shadow-[0_0_40px_rgba(10, 186, 181,0.2)] ${
                 agreed
                   ? 'cursor-pointer'
                   : 'cursor-not-allowed opacity-50 hover:bg-[#0abab5] hover:shadow-none'
               } ${isProcessing || isRedirecting ? 'opacity-65' : ''}`}
             >
               <span className="relative grid min-h-[1.35em] w-full place-items-center overflow-hidden px-1">
-                <span className="text-center text-[14px] font-display font-semibold leading-snug flex items-center gap-2 justify-center text-white">
+                <span className="text-center text-[14px] font-display font-bold leading-snug flex items-center gap-2 justify-center text-white">
                   {isRedirecting
                     ? v.redirecting
                     : isProcessing
@@ -418,14 +418,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     ? (locale === 'en' ? 'Success!' : locale === 'ua' ? 'Успішно!' : 'Успешно!')
                     : `${v.pay} ${finalPrice} ₽`}
                   {!isProcessing && !isRedirecting && !isSuccess && (
-                    <ArrowRight size={15} strokeWidth={2} />
+                    <ArrowRight size={15} strokeWidth={2.2} />
                   )}
                 </span>
               </span>
             </button>
 
             <a
-              className="group w-full flex items-center justify-center gap-1.5 py-2.5 rounded-[16px] bg-[#5BB8E0]/50 hover:bg-[#5BB8E0]/65 text-[12px] font-display font-medium text-white/80 transition-all duration-300 hover:shadow-[0_0_30px_rgba(91,184,224,0.15)]"
+              className="group w-full flex items-center justify-center gap-1.5 py-2.5 rounded-[16px] bg-[#5BB8E0]/50 hover:bg-[#5BB8E0]/65 text-[12px] font-display font-bold text-white/90 transition-all duration-300 hover:shadow-[0_0_30px_rgba(91,184,224,0.15)]"
               href="https://funpay.com/users/9360872/"
               rel="noopener noreferrer"
               target="_blank"
@@ -434,7 +434,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               <ArrowRight
                 className="group-hover:translate-x-0.5 transition-transform duration-200"
                 size={13}
-                strokeWidth={2}
+                strokeWidth={2.2}
               />
             </a>
           </div>

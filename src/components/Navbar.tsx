@@ -67,17 +67,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden sm:flex items-center gap-0.5">
           <button
             onClick={scrollToStore}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-medium text-white/30 hover:text-white/70 rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold text-white/40 hover:text-white rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
           >
-            <Tag size={14} strokeWidth={1.8} />
+            <Tag size={14} strokeWidth={2} />
             <span>{t.nav.pricing}</span>
           </button>
 
           <button
             onClick={onOpenDocs}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-medium text-white/30 hover:text-white/70 rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold text-white/40 hover:text-white rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
           >
-            <ScrollText size={14} strokeWidth={1.8} />
+            <ScrollText size={14} strokeWidth={2} />
             <span>{t.nav.docs}</span>
           </button>
 
@@ -85,7 +85,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href="https://dsc.gg/insomnisclient"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-medium text-white/30 hover:text-white/70 rounded-full hover:bg-white/[0.04] transition-all duration-200"
+            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold text-white/40 hover:text-white rounded-full hover:bg-white/[0.04] transition-all duration-200"
           >
             <DiscordIcon size={14} className="opacity-80" />
             <span>{t.nav.support}</span>
@@ -98,10 +98,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               key={lang}
               onClick={() => setLocale(lang)}
-              className={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 uppercase cursor-pointer ${
+              className={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] transition-all duration-200 uppercase cursor-pointer ${
                 locale === lang
-                  ? 'bg-white/[0.1] text-white font-semibold'
-                  : 'text-white/30 hover:text-white/60'
+                  ? 'bg-white/[0.12] text-white font-bold'
+                  : 'text-white/40 hover:text-white/80 font-bold'
               }`}
             >
               {lang}
@@ -115,9 +115,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             if (onGoToStore) onGoToStore();
             else scrollToStore(e);
           }}
-          className="ml-1 flex items-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full sm:rounded-xl text-[13px] font-semibold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-200 hover:shadow-[0_0_20px_rgba(10, 186, 181,0.35)] cursor-pointer"
+          className="ml-1 flex items-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full sm:rounded-xl text-[13px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-200 hover:shadow-[0_0_20px_rgba(10, 186, 181,0.35)] cursor-pointer"
         >
-          <Tag size={14} strokeWidth={2} />
+          <Tag size={14} strokeWidth={2.2} />
           <span>{t.nav.pricing}</span>
         </button>
       </nav>
