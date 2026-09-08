@@ -190,7 +190,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
       <div
         ref={modalRef}
         className="relative z-10 overflow-hidden rounded-[28px] bg-[#0E1017] shadow-[0_8px_60px_rgba(0,0,0,0.6)] w-[95vw] max-w-[860px] h-auto md:h-[540px] min-h-[500px]"
-        style={{ transformPerspective: 1200 }}
+        style={{ perspective: 1200 }}
       >
         {/* Blurred background image */}
         <div className="absolute inset-0 z-0 pointer-events-none">

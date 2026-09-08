@@ -4,8 +4,23 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  // Determine base path for GitHub Pages or local preview
+  let base = './';
+  if (process.env.BASE_PATH) {
+    base = process.env.BASE_PATH.endsWith('/') ? process.env.BASE_PATH : `${process.env.BASE_PATH}/`;
+  } else if (process.env.GITHUB_REPOSITORY) {
+    const parts = process.env.GITHUB_REPOSITORY.split('/');
+    const owner = parts[0] || '';
+    const repo = parts[1] || '';
+    if (repo && repo.toLowerCase() === `${owner.toLowerCase()}.github.io`) {
+      base = '/';
+    } else if (repo) {
+      base = `/${repo}/`;
+    }
+  }
+
   return {
-    base: './',
+    base,
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
