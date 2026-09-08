@@ -11,6 +11,8 @@ interface NavbarProps {
   setLocale: (locale: Locale) => void;
   onOpenDocs: () => void;
   onGoToStore?: () => void;
+  activeNav?: 'pricing' | 'docs' | 'support';
+  onLogoClick?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -18,6 +20,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   setLocale,
   onOpenDocs,
   onGoToStore,
+  activeNav,
+  onLogoClick,
 }) => {
   const t = translations[locale];
   const headerRef = useRef<HTMLElement>(null);
@@ -36,6 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const scrollToStore = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (onGoToStore) {
+      onGoToStore();
+      return;
+    }
     const elem = document.getElementById('store');
     if (elem) {
       elem.scrollIntoView({ behavior: 'smooth' });
@@ -53,7 +61,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           href="/"
           onClick={(e) => {
             e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (onLogoClick) {
+              onLogoClick();
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
           }}
           className="flex items-center gap-2.5 pl-3 pr-4 sm:pr-5 transition-opacity hover:opacity-85 cursor-pointer"
         >
@@ -67,7 +79,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden sm:flex items-center gap-0.5">
           <button
             onClick={scrollToStore}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold text-white/40 hover:text-white rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
+              activeNav === 'pricing'
+                ? 'bg-white/[0.08] text-white'
+                : 'text-white/40 hover:text-white hover:bg-white/[0.04]'
+            }`}
           >
             <Tag size={14} strokeWidth={2} />
             <span>{t.nav.pricing}</span>
@@ -75,9 +91,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={onOpenDocs}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold text-white/40 hover:text-white rounded-full hover:bg-white/[0.04] transition-all duration-200 cursor-pointer"
+            className={`flex items-center gap-1.5 px-4 py-1.5 text-[13px] font-bold rounded-full transition-all duration-200 cursor-pointer ${
+              activeNav === 'docs'
+                ? 'bg-white/[0.08] text-white/90'
+                : 'text-white/40 hover:text-white hover:bg-white/[0.04]'
+            }`}
           >
-            <ScrollText size={14} strokeWidth={2} />
+            <ScrollText size={14} strokeWidth={2} className={activeNav === 'docs' ? 'text-[#0abab5]' : ''} />
             <span>{t.nav.docs}</span>
           </button>
 
