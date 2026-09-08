@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'SuisseIntl-Medium';
+  src: url('/fonts/SuisseIntl-Medium.woff2') format('woff2'),
+       url('/fonts/SuisseIntl-Medium.woff') format('woff');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'SuisseIntl-Medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'SuisseIntl-Medium', system-ui, sans-serif;
+  --font-title: 'SuisseIntl-Medium', system-ui, sans-serif;
+  --color-delta-900: #111216;
+  --color-insomnis-900: #111216;
+  --color-primary-300: #6fe7e1;
+  --color-primary-400: #30ded5;
+  --color-primary-500: #0abab5;
+  --color-primary-600: #099e9a;
+  --color-primary-700: #077a76;
+}
+
+:root {
+  --color-primary: #0abab5;
+  --color-primary-300: #6fe7e1;
+  --color-primary-400: #30ded5;
+  --color-primary-500: #0abab5;
+  --color-primary-600: #099e9a;
+  --color-primary-700: #077a76;
+  --primary: #0abab5;
+  --primary-rgb: 10, 186, 181;
+  --color-delta-900: #111216;
+  --color-insomnis-900: #111216;
+  --background: #111216;
+  --foreground: #fafafa;
+}
+
+*, html, body, input, button, textarea, select {
+  font-family: 'SuisseIntl-Medium', system-ui, -apple-system, sans-serif !important;
+}
+
+body {
+  background-color: #111216;
+  color: #fafafa;
+  overflow-x: hidden;
+}
+
+/* Delta animations */
+@keyframes kenBurns {
+  0% { transform: scale(1) translate3d(0, 0, 0); }
+  50% { transform: scale(1.06) translate3d(0, 0, 0); }
+  100% { transform: scale(1) translate3d(0, 0, 0); }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 28s ease-in-out infinite alternate;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.auth-input {
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-input:focus-within {
+  border-color: rgba(10, 186, 181, 0.45) !important;
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 0 20px rgba(10, 186, 181, 0.15);
+}
+
+.auth-input:focus-within .input-icon {
+  color: #0abab5 !important;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.delta-gradient-text,
+.insomnis-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-700),
+    var(--color-primary),
+    var(--color-primary-300),
+    var(--color-primary),
+    var(--color-primary-700)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes shimmerSlide {
+  0% { transform: translate(-100%); }
+  100% { transform: translate(100%); }
+}
+
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer:after {
+  content: "";
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.12) 48%, rgba(255,255,255,0.24) 50%, rgba(255,255,255,0.12) 52%, transparent 70%);
+  animation: shimmerSlide 3.5s ease-in-out 1.5s infinite;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Glassmorphic elements */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111216;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 186, 181, 0.5);
+}
