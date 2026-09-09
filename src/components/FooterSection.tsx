@@ -1,214 +1,124 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { gsap } from '../lib/gsap';
-import { DeltaLogo } from './DeltaLogo';
-import { DiscordIcon } from './DiscordIcon';
+import React from 'react';
 import { Locale } from '../types';
-import { translations } from '../data/translations';
 
 interface FooterSectionProps {
-  locale: Locale;
-  onOpenDocs: () => void;
+  locale?: Locale;
+  onOpenDocs?: () => void;
   onGoToStore?: () => void;
 }
 
-export const FooterSection: React.FC<FooterSectionProps> = ({
-  locale,
-  onOpenDocs,
-  onGoToStore,
-}) => {
-  const t = translations[locale];
-  const ctaRef = useRef<HTMLDivElement>(null);
-
-  const ctaRaw = t?.reviews?.cta || (t?.reviews as Record<string, string>)?.ctaTitle || (locale === 'en' ? 'Ready to start your adventure?' : locale === 'ua' ? 'Готові розпочати свою пригоду?' : 'Готовы начать свое приключение?');
-  const ctaWords = ctaRaw.split(' ');
-  const ctaPrefix = ctaWords.slice(0, -1).join(' ');
-  const ctaAccent = ctaWords.slice(-1)[0] || '';
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    if (!ctaRef.current) return;
-    const anim = gsap.fromTo(
-      ctaRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ctaRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-
-    return () => {
-      anim.kill();
-    };
-  }, []);
-
+export const FooterSection: React.FC<FooterSectionProps> = () => {
   return (
-    <footer className="relative bg-[#111216] border-t border-white/[0.04]">
-      {/* Top CTA area */}
-      <div className="max-w-5xl mx-auto px-6 pt-24 sm:pt-32 pb-24 sm:pb-32">
-        <div
-          ref={ctaRef}
-          className="flex flex-col items-center text-center"
-        >
-          <h2
-            className="font-title text-[2.2rem] sm:text-[2.8rem] md:text-[3.2rem] font-bold text-white leading-tight tracking-tight"
-            style={{ textShadow: '0 2px 16px rgba(0,0,0,0.3)' }}
-          >
-            {ctaPrefix} <span className="delta-gradient-text">{ctaAccent}</span>
-          </h2>
+    <footer className="relative px-6 lg:px-22 mx-auto max-w-[110rem] size-full pt-20 lg:pt-30 pb-24 lg:pb-0 overflow-hidden">
+      <div className="flex flex-col gap-14 relative z-10">
+        <div className="grid gap-12 2xl:grid-cols-[3.8fr_0.8fr_1fr]">
+          <div className="flex flex-col gap-6">
+            <img src="/branding/logo.svg" className="size-8" alt="Insomnis" />
+            <div className="flex flex-col gap-6 leading-7 lg:leading-normal">
+              <p className="text-white/60 font-jacobs text-[14px]">
+                © 2026 Insomnis. Все права защищены. <br /><br />
+                Почта <span className="text-white bg-white/10 px-1.5 py-1 rounded-lg mx-1">support@insomnis.fun</span><br className="lg:hidden" />
+                ИП <span className="text-white bg-white/10 px-1.5 py-1 rounded-lg mx-1">Дрожжин Артём Викторович</span><br className="lg:hidden" />
+                ИНН <span className="text-white bg-white/10 px-1.5 py-1 rounded-lg mx-1">772450657890</span><br className="lg:hidden" />
+                ОГРНИП <span className="text-white bg-white/10 px-1.5 py-1 rounded-lg mx-1">326774600392741</span>
+              </p>
+              <div className="font-jacobs text-[12px] text-white/40 flex gap-2 items-center">
+                <span>
+                  Дизайн и разработка от{' '}
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://ggsky.one?from=insomnis"
+                    className="bg-linear-to-r from-blue-300 to-indigo-300 bg-clip-text text-transparent hover:brightness-115 smooth"
+                  >
+                    <span className="underline underline-offset-2">@GGSkyOne</span>
+                  </a>
+                </span>
+                <button className="flex cursor-pointer hover:brightness-115 smooth text-white" aria-label="fr">
+                  <span className="icon-[iconoir--spark-solid] size-3.5 bg-linear-to-r from-blue-300 to-indigo-300 -skew-x-12 grayscale-25"></span>
+                </button>
+              </div>
+            </div>
+          </div>
 
-          <p className="text-[14px] sm:text-[15px] text-white/40 mt-4 max-w-sm leading-relaxed">
-            {t.reviews.ctaSub}
-          </p>
-
-          <div className="flex items-center gap-3 mt-8">
-            <button
-              onClick={() => {
-                if (onGoToStore) onGoToStore();
-                else scrollTo('store');
-              }}
-              className="btn-shimmer group relative flex items-center gap-2 px-7 py-3.5 rounded-2xl text-[14px] font-bold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-300 hover:shadow-[0_0_50px_rgba(10,186,181,0.35)] cursor-pointer overflow-hidden"
+          <div className="flex flex-col gap-3 items-start">
+            <h2 className="font-jacobs font-medium text-sky-200 bg-blue-400/20 px-1 rounded-md mx-1 text-[13px] uppercase mb-2">
+              Ссылки
+            </h2>
+            <a
+              href="https://t.me/insomnis"
+              target="_blank"
+              rel="noreferrer"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
-              <span>{t.hero.ctaPrimary}</span>
-              <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-200" />
-            </button>
-
-            {/* Discord */}
+              <span className="icon-[iconoir--telegram] size-4"></span> Telegram канал
+            </a>
             <a
               href="https://dsc.gg/insomnisclient"
               target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 flex items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all duration-200"
-              title="Discord"
+              rel="noreferrer"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
-              <DiscordIcon size={18} />
+              <span className="icon-[iconoir--discord] size-4"></span> Discord сервер
+            </a>
+            <a
+              href="https://my.insomnis.fun/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--settings] size-4"></span> Панель управления
+            </a>
+            <a
+              href="https://insomnis.fun/status"
+              target="_blank"
+              rel="noreferrer"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--activity] size-4"></span> Статус серверов
+            </a>
+          </div>
+
+          <div className="flex flex-col gap-3 items-start">
+            <h2 className="font-jacobs font-medium text-sky-200 bg-blue-400/20 px-1 rounded-md mx-1 text-[13px] uppercase mb-2">
+              Документы
+            </h2>
+            <a
+              href="/documents/публичная_офферта.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--open-book] size-4"></span> Договор-оферта
+            </a>
+            <a
+              href="/terms"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--book] size-4"></span> Условия использования
+            </a>
+            <a
+              href="/privacy"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--lock] size-4"></span> Политика конфиденциальности
+            </a>
+            <a
+              href="/consent"
+              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
+            >
+              <span className="icon-[iconoir--check] size-4"></span> Согласие на обработку данных
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Links */}
-      <div className="max-w-5xl mx-auto px-6 pt-12 pb-10 border-t border-white/[0.04]">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-12 mb-12">
-          {/* Brand col */}
-          <div className="col-span-2 sm:col-span-1">
-            <div className="flex items-center gap-2 mb-3">
-              <DeltaLogo size={20} />
-              <span className="font-title text-[15px] font-bold text-white/90 tracking-tight">insomnis</span>
-            </div>
-            <p className="text-[12px] text-white/30 leading-relaxed mb-5 max-w-[200px]">
-              {t.footer.tagline}
-            </p>
-            <div className="flex items-center gap-2">
-              <a
-                href="https://dsc.gg/insomnisclient"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 flex items-center justify-center rounded-lg border border-white/[0.06] text-white/30 hover:text-white hover:border-white/[0.2] transition-all duration-200"
-                title="Discord"
-              >
-                <DiscordIcon size={14} />
-              </a>
-            </div>
-          </div>
-
-          {/* Platform */}
-          <div>
-            <p className="text-[11px] font-semibold text-white/40 uppercase tracking-[0.12em] mb-3.5">
-              {t.footer.platform.title}
-            </p>
-            <div className="flex flex-col gap-2.5">
-              <button
-                onClick={() => scrollTo('store')}
-                className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-              >
-                {t.nav.pricing}
-              </button>
-              <button
-                onClick={onOpenDocs}
-                className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-              >
-                {t.nav.docs}
-              </button>
-              <a
-                href="https://dsc.gg/insomnisclient"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left"
-              >
-                {t.nav.support}
-              </a>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <p className="text-[11px] font-semibold text-white/40 uppercase tracking-[0.12em] mb-3.5">
-              {t.footer.navigation.title}
-            </p>
-            <div className="flex flex-col gap-2.5">
-              {t.footer.navigation.links
-                ?.filter((link) => !link.href?.includes('faq') && link.label?.toLowerCase() !== 'faq')
-                .map((link) => (
-                  <button
-                    key={link.label}
-                    onClick={() => {
-                      if (link.href?.includes('activity')) scrollTo('activity');
-                      else if (link.href?.includes('store')) scrollTo('store');
-                      else scrollTo('how-it-works');
-                    }}
-                    className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              <button
-                onClick={onOpenDocs}
-                className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-              >
-                {locale === 'ru' ? 'Правила сервера' : locale === 'ua' ? 'Правила сервера' : 'Server Rules'}
-              </button>
-            </div>
-          </div>
-
-          {/* Docs */}
-          <div>
-            <p className="text-[11px] font-semibold text-white/40 uppercase tracking-[0.12em] mb-3.5">
-              {t.footer.docs.title}
-            </p>
-            <div className="flex flex-col gap-2.5">
-              {t.footer.docs.links.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={onOpenDocs}
-                  className="text-[13px] text-white/30 hover:text-white/70 transition-colors duration-200 text-left cursor-pointer"
-                >
-                  {link.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom copyright line */}
-        <div className="flex flex-col items-center justify-between gap-2 border-t border-white/[0.04] pt-6 sm:flex-row">
-          <span className="text-[12px] text-white/25">{t.footer.copy}</span>
-          <span className="text-[12px] text-white/25">
-            insomnis.fun inc
-          </span>
-        </div>
-      </div>
+      <svg viewBox="0 0 1000 180" className="hidden lg:block w-full mt-12 lg:-ml-3" preserveAspectRatio="xMidYMid meet">
+        <text x="500" y="150" textAnchor="middle" className="font-jacobs font-bold" fontSize="165" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="4">
+          INSOMNIS
+        </text>
+      </svg>
     </footer>
   );
 };
+

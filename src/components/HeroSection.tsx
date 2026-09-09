@@ -161,11 +161,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           ref={titleContainerRef}
           className="flex flex-col items-center select-none text-center"
         >
-          <div className="font-title text-[2.5rem] sm:text-[3.75rem] md:text-[4.75rem] lg:text-[5.25rem] font-bold leading-[1.08] tracking-tight">
+          <div className="font-title text-[2.4rem] sm:text-[3.8rem] md:text-[4.8rem] lg:text-[5.4rem] font-bold leading-[1.05] tracking-tight">
             {renderChars(t.hero.line1)}
           </div>
 
-          <div className="mt-1 font-title text-[1.75rem] sm:text-[2.5rem] md:text-[3.25rem] lg:text-[3.85rem] font-bold leading-[1.15] tracking-tight flex items-center justify-center flex-wrap gap-x-2 text-center">
+          <div className="mt-1 font-title text-[1.6rem] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[3.8rem] font-bold leading-[1.1] tracking-tight flex items-center justify-center flex-wrap gap-x-2 text-center">
             {t.hero.line2pre && (
               <span className="inline-block mr-1.5">{renderChars(t.hero.line2pre)}</span>
             )}
@@ -176,7 +176,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Slogan with Motion Blur Typing Effect */}
         <div
           ref={subtitleContainerRef}
-          className="mt-5 max-w-xl text-[14px] sm:text-base md:text-[17px] leading-relaxed font-normal select-none"
+          className="mt-5 max-w-xl text-[14px] sm:text-base md:text-[17px] font-display leading-relaxed font-normal select-none"
           style={{ textShadow: '0 1px 6px rgba(0,0,0,0.3)' }}
         >
           {renderChars(subtitleText, false, true)}

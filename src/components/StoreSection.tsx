@@ -247,7 +247,7 @@ export const StoreSection: React.FC<StoreSectionProps> = ({ locale, onSelectPlan
                   <p className="text-[11px] font-display text-white/30 mb-3 leading-relaxed">
                     {plan.description}
                   </p>
-                  <p className="text-[22px] font-display font-bold" style={{ color: plan.color }}>
+                  <p className="text-[22px] font-title font-bold tracking-tight" style={{ color: plan.color }}>
                     {plan.displayPrice || (plan.price ? `${plan.price}` : '')}
                   </p>
                 </div>
