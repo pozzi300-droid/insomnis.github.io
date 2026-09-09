@@ -50,8 +50,10 @@ export const RulesView: React.FC<RulesViewProps> = ({
   useEffect(() => {
     if (initialSlug) {
       setSelectedSlug(initialSlug);
+    } else if (allSections.length > 0) {
+      setSelectedSlug(allSections[0].slug);
     }
-  }, [initialSlug]);
+  }, [initialSlug, allSections]);
 
   const filteredSections = useMemo(() => {
     if (!searchQuery.trim()) return allSections;
@@ -83,7 +85,10 @@ export const RulesView: React.FC<RulesViewProps> = ({
   const handleSelectSection = (slug: string) => {
     setSelectedSlug(slug);
     setMobileOpen(false);
-    window.location.hash = `#/rules/${slug}`;
+    const targetPath = `/rules/${slug}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState(null, '', targetPath);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -117,7 +122,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
       </button>
 
       {/* Search Bar */}
-      <div className="flex items-center gap-2.5 px-3.5 py-2.5 mb-5 rounded-full border border-white/[0.06] bg-white/[0.02] w-[190px]">
+      <div className="flex items-center gap-2.5 px-3.5 py-2.5 mb-5 rounded-full border border-white/[0.06] bg-white/[0.02] w-full max-w-[260px] md:w-[190px]">
         <Search className="text-white/25 flex-shrink-0" size={14} strokeWidth={1.5} />
         <input
           className="flex-1 min-w-0 bg-transparent text-[13px] text-white/70 font-display placeholder:text-white/25 outline-none"
@@ -175,7 +180,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
           onClick={onBackToHome}
           className="hover:text-white/40 transition-colors cursor-pointer"
         >
-          {locale === 'en' ? 'Documentation' : locale === 'ua' ? 'Документація' : 'Документация'}
+          {locale === 'en' ? 'Rules' : 'Правила'}
         </button>
         <ChevronRight size={10} strokeWidth={2} />
         <span className="text-white/35 truncate">{activeSection.title}</span>
@@ -285,8 +290,8 @@ export const RulesView: React.FC<RulesViewProps> = ({
         />
       </div>
 
-      {/* Desktop Floating Navbar */}
-      <div className="relative z-20 hidden md:block">
+      {/* Floating Pill Navbar (same on mobile and desktop) */}
+      <div className="relative z-50">
         <Navbar
           locale={locale}
           setLocale={setLocale || (() => {})}
@@ -312,30 +317,47 @@ export const RulesView: React.FC<RulesViewProps> = ({
         </div>
       </div>
 
-      {/* Mobile Layout: Exactly matching deltaclient (md:hidden) */}
-      <div className="md:hidden relative z-10">
-        <div className="sticky top-0 z-30 flex items-center justify-between px-5 py-4 bg-[#111216]/80 backdrop-blur-xl border-b border-white/[0.04]">
-          <button onClick={onBackToHome} className="flex items-center gap-2 cursor-pointer">
-            <DeltaLogo size={20} />
-            <span className="text-[14px] font-title font-semibold text-white/80">
-              {locale === 'en' ? 'documentation' : locale === 'ua' ? 'документація' : 'документация'}
+      {/* Mobile Layout: Uses same floating Navbar with responsive chapter selector */}
+      <div className="md:hidden relative z-10 pt-24 px-5 pb-16">
+        {/* Quick Chapter Selector Bar */}
+        <div className="flex items-center justify-between gap-3 mb-6 px-4 py-2.5 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md">
+          <div className="flex items-center gap-2 min-w-0">
+            <Layers size={15} className="text-[#0abab5] shrink-0" />
+            <span className="text-[13px] font-display font-medium text-white/80 truncate">
+              {activeSection.title}
             </span>
-          </button>
+          </div>
           <button
-            className="text-white/40 hover:text-white/60 transition-colors cursor-pointer"
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={() => setMobileOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-[12px] font-medium text-white/90 transition-colors shrink-0 cursor-pointer"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            <Menu size={14} />
+            <span>{locale === 'en' ? 'Sections' : locale === 'ua' ? 'Розділи' : 'Разделы'}</span>
           </button>
         </div>
 
+        {/* Modal / Drawer for rules navigation on mobile */}
         {mobileOpen && (
-          <div className="fixed inset-0 z-20 bg-[#111216]/95 backdrop-blur-xl pt-16 px-5 overflow-y-auto">
+          <div className="fixed inset-0 z-50 bg-[#111216]/95 backdrop-blur-2xl p-5 overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2">
+                <DeltaLogo size={18} />
+                <span className="text-[14px] font-title font-semibold text-white/90">
+                  {locale === 'en' ? 'Rule Sections' : locale === 'ua' ? 'Розділи правил' : 'Разделы правил'}
+                </span>
+              </div>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-1.5 rounded-full bg-white/[0.06] text-white/60 hover:text-white transition-colors cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
             {renderSidebar()}
           </div>
         )}
 
-        <main className="px-5 pt-6 pb-16">
+        <main>
           {renderArticle()}
         </main>
       </div>

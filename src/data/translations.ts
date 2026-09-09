@@ -137,7 +137,7 @@ export const translations = {
         "links": [
           {
             "label": "Server Rules",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Store",
@@ -180,7 +180,7 @@ export const translations = {
         "links": [
           {
             "label": "Project Rules",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Support",
@@ -402,7 +402,7 @@ export const translations = {
         "links": [
           {
             "label": "Правила сервера",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Магазин",
@@ -445,7 +445,7 @@ export const translations = {
         "links": [
           {
             "label": "Правила проекта",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Поддержка",
@@ -667,7 +667,7 @@ export const translations = {
         "links": [
           {
             "label": "Правила сервера",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Магазин",
@@ -710,7 +710,7 @@ export const translations = {
         "links": [
           {
             "label": "Правила проєкту",
-            "href": "#/rules"
+            "href": "/rules"
           },
           {
             "label": "Підтримка",

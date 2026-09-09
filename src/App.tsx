@@ -22,23 +22,42 @@ export default function App() {
   });
 
   useEffect(() => {
-    const handleHashChange = () => {
+    const parseRoute = () => {
+      const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
       const hash = window.location.hash;
+
+      // Backward compatibility: redirect any legacy hash URLs to clean paths
       if (hash.startsWith('#/rules') || hash.startsWith('#rules')) {
+        const hashMatch = hash.match(/#\/?rules\/([a-z0-9-]+)/);
+        const slug = hashMatch ? hashMatch[1] : null;
         setCurrentView('rules');
-        const match = hash.match(/#\/?rules\/([a-z0-9-]+)/);
+        setInitialRuleSlug(slug);
+        const cleanPath = slug ? `/rules/${slug}` : '/rules';
+        window.history.replaceState(null, '', cleanPath);
+        return;
+      }
+
+      if (pathname === '/rules' || pathname.startsWith('/rules/')) {
+        setCurrentView('rules');
+        const match = pathname.match(/^\/rules\/([a-z0-9-]+)/);
         if (match) {
           setInitialRuleSlug(match[1]);
         } else {
           setInitialRuleSlug(null);
         }
-      } else if (hash === '' || hash === '#') {
+      } else {
         setCurrentView('home');
+        setInitialRuleSlug(null);
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    parseRoute();
+    window.addEventListener('popstate', parseRoute);
+    window.addEventListener('hashchange', parseRoute);
+    return () => {
+      window.removeEventListener('popstate', parseRoute);
+      window.removeEventListener('hashchange', parseRoute);
+    };
   }, []);
 
   const handleSelectPlan = (plan: StoreItem) => {
@@ -46,26 +65,21 @@ export default function App() {
   };
 
   const handleOpenRules = (slug?: string) => {
-    if (slug) {
-      setInitialRuleSlug(slug);
-      window.location.hash = `#/rules/${slug}`;
-    } else {
-      setInitialRuleSlug(null);
-      window.location.hash = '#/rules';
+    const targetPath = slug ? `/rules/${slug}` : '/rules';
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState(null, '', targetPath);
     }
+    setInitialRuleSlug(slug || null);
     setCurrentView('rules');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackToHome = () => {
+    if (window.location.pathname !== '/') {
+      window.history.pushState(null, '', '/');
+    }
     setCurrentView('home');
     setInitialRuleSlug(null);
-    if (typeof window !== 'undefined') {
-      try {
-        window.history.pushState(null, '', window.location.pathname);
-      } catch {}
-      window.location.hash = '';
-    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

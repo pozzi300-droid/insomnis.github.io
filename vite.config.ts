@@ -4,8 +4,8 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
-  // Determine base path for GitHub Pages or local preview
-  let base = './';
+  // Determine base path for hosting or GitHub Pages
+  let base = '/';
   if (process.env.BASE_PATH) {
     base = process.env.BASE_PATH.endsWith('/') ? process.env.BASE_PATH : `${process.env.BASE_PATH}/`;
   } else if (process.env.GITHUB_REPOSITORY) {
