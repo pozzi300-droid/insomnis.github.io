@@ -78,7 +78,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
                 if (onGoToStore) onGoToStore();
                 else scrollTo('store');
               }}
-              className="btn-shimmer group relative flex items-center gap-2 px-7 py-3.5 rounded-2xl text-[14px] font-bold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-300 hover:shadow-[0_0_50px_rgba(10, 186, 181,0.35)] cursor-pointer overflow-hidden"
+              className="btn-shimmer group relative flex items-center gap-2 px-7 py-3.5 rounded-2xl text-[14px] font-bold text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-300 hover:shadow-[0_0_50px_rgba(10,186,181,0.35)] cursor-pointer overflow-hidden"
             >
               <span>{t.hero.ctaPrimary}</span>
               <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform duration-200" />

@@ -195,7 +195,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         {/* Blurred background image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <img
-            src={getAssetUrl('/images/main/landing_1.jpg')}
+            src={getAssetUrl('/images/main/hero_bg.jpeg')}
             alt=""
             className="w-full h-full object-cover object-[center_40%] scale-[1.02]"
             style={{ filter: 'blur(20px)' }}
@@ -216,14 +216,14 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <div className="absolute left-5 top-1/2 -translate-y-1/2 h-[490px] max-h-[490px] w-[320px] overflow-hidden rounded-[25px] z-20 hidden md:block [backface-visibility:hidden]">
           <div className="relative h-full w-full min-w-0 overflow-hidden rounded-[25px]">
             <img
-              src={getAssetUrl('/images/main/landing_1.jpg')}
+              src={getAssetUrl('/images/main/hero_bg.jpeg')}
               alt=""
               className="w-full h-full object-cover scale-[1.05]"
             />
             <div className="absolute inset-0 bg-[rgba(11,13,22,0.8)]" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(10, 186, 181,0.5)] mix-blend-overlay" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(10,186,181,0.5)] mix-blend-overlay" />
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 p-6">
-              <div className="text-[#0abab5] drop-shadow-[0_0_24px_rgba(10, 186, 181,0.5)]">
+              <div className="text-[#0abab5] drop-shadow-[0_0_24px_rgba(10,186,181,0.5)]">
                 <DeltaSvg className="w-12 h-12" />
               </div>
               <div className="text-center space-y-2 w-[220px]">
@@ -402,7 +402,7 @@ export const CheckoutModal: React.FC<CheckoutModalProps> = ({
               type="button"
               disabled={!agreed || isProcessing || isRedirecting}
               onClick={handlePurchase}
-              className={`w-full flex items-center justify-center py-3.5 rounded-[20px] font-display text-[14px] font-bold text-white transition-all duration-300 bg-[#0abab5] hover:bg-[#30ded5] hover:shadow-[0_0_40px_rgba(10, 186, 181,0.2)] ${
+              className={`w-full flex items-center justify-center py-3.5 rounded-[20px] font-display text-[14px] font-bold text-white transition-all duration-300 bg-[#0abab5] hover:bg-[#30ded5] hover:shadow-[0_0_40px_rgba(10,186,181,0.2)] ${
                 agreed
                   ? 'cursor-pointer'
                   : 'cursor-not-allowed opacity-50 hover:bg-[#0abab5] hover:shadow-none'

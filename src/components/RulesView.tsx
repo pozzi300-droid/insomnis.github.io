@@ -206,7 +206,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
         {activeSection.points.map((point) => (
           <div key={point.num} id={`rule-${point.num}`} className="scroll-mt-28 mb-8">
             <h2 className="text-[20px] font-title font-semibold text-white mt-10 mb-4 flex items-baseline gap-2">
-              <span className="text-[#0abab5] font-mono text-[16px]">§ {point.num}</span>
+              <span className="delta-gradient-text font-mono text-[16px] font-bold">§ {point.num}</span>
               {point.title && <span>{point.title}</span>}
             </h2>
             {point.content.map((p, pIdx) => (
@@ -271,7 +271,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
       {/* Background layer directly from deltaclient docs layout */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
-          src="/images/main/landing_1.jpg"
+          src={getAssetUrl('/images/main/hero_bg.jpeg')}
           alt=""
           className="w-full h-full object-cover object-[center_40%]"
           style={{ filter: 'blur(20px)' }}

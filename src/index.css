@@ -86,7 +86,8 @@ body {
 }
 
 .delta-gradient-text,
-.insomnis-gradient-text {
+.insomnis-gradient-text,
+.pride-gradient-text {
   background: linear-gradient(
     135deg,
     var(--color-primary-700),
@@ -100,6 +101,10 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientShift 6s ease infinite;
+}
+
+.pride-gradient-bg {
+  background: #0abab5;
 }
 
 @keyframes shimmerSlide {

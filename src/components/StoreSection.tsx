@@ -155,12 +155,12 @@ export const StoreSection: React.FC<StoreSectionProps> = ({ locale, onSelectPlan
         }}
       />
 
-      {/* Background with landing_3.jpg */}
+      {/* Background with store_bg.jpeg */}
       <div className="absolute inset-0 z-0">
         <img
-          src={getAssetUrl('/images/main/landing_3.jpg')}
+          src={getAssetUrl('/images/main/store_bg.jpeg')}
           alt=""
-          className="w-full h-full object-cover object-center opacity-[0.15] select-none pointer-events-none"
+          className="w-full h-full object-cover object-center opacity-[0.25] select-none pointer-events-none"
         />
         <div
           className="absolute inset-0"

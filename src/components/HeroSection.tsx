@@ -131,7 +131,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image with Ken Burns zoom animation */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src={getAssetUrl('/images/main/landing_1.jpg')}
+          src={getAssetUrl('/images/main/hero_bg.jpeg')}
           alt="Insomnis Minecraft Server"
           className="w-full h-full object-cover object-[center_40%] animate-ken-burns select-none pointer-events-none"
         />
@@ -151,7 +151,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Animated Insomnis Logo */}
         <div
           ref={logoRef}
-          className="mb-5 drop-shadow-[0_0_24px_rgba(10, 186, 181,0.4)] will-change-[transform,filter,opacity]"
+          className="mb-5 drop-shadow-[0_0_24px_rgba(10,186,181,0.4)] will-change-[transform,filter,opacity]"
         >
           <DeltaLogo size={52} />
         </div>
@@ -196,7 +196,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 if (elem) elem.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] active:scale-[0.98] transition-all duration-200 hover:shadow-[0_0_30px_rgba(10, 186, 181,0.35)] cursor-pointer"
+            className="px-6 sm:px-7 py-2.5 sm:py-2.5 rounded-xl sm:rounded-2xl text-[14px] sm:text-[14.5px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] active:scale-[0.98] transition-all duration-200 hover:shadow-[0_0_30px_rgba(10,186,181,0.35)] cursor-pointer"
           >
             {t.hero.ctaPrimary}
           </button>

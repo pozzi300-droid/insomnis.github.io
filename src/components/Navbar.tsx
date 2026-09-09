@@ -135,7 +135,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             if (onGoToStore) onGoToStore();
             else scrollToStore(e);
           }}
-          className="ml-1 flex items-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full sm:rounded-xl text-[13px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-200 hover:shadow-[0_0_20px_rgba(10, 186, 181,0.35)] cursor-pointer"
+          className="ml-1 flex items-center gap-1.5 px-4 sm:px-5 py-1.5 rounded-full sm:rounded-xl text-[13px] font-bold tracking-tight text-white bg-[#0abab5] hover:bg-[#099e9a] transition-all duration-200 hover:shadow-[0_0_20px_rgba(10,186,181,0.35)] cursor-pointer"
         >
           <Tag size={14} strokeWidth={2.2} />
           <span>{t.nav.pricing}</span>
