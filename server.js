@@ -73,10 +73,10 @@ app.use((req, res, next) => {
 });
 
 // Port prioritization:
-// 1. Pterodactyl SERVER_PORT (standard in pterodactyl wings/eggs)
-// 2. Default target allocation 20042
-// 3. Fallback to process.env.PORT
-const rawPort = process.env.SERVER_PORT || 20042 || process.env.PORT;
+// 1. process.env.PORT (required by Cloud Run / AI Studio container proxy - 3000)
+// 2. process.env.SERVER_PORT (Pterodactyl wings / egg environment)
+// 3. Fallback to 3000 or 20042
+const rawPort = process.env.PORT || process.env.SERVER_PORT || 3000;
 const PORT = Number(rawPort);
 const HOST = '0.0.0.0';
 

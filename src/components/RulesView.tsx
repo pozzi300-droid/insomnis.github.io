@@ -16,6 +16,7 @@ import { Locale } from '../types';
 import { RULES_DATA, RULE_CATEGORIES, RuleSection } from '../data/rulesData';
 import { Navbar } from './Navbar';
 import { DeltaLogo } from './DeltaLogo';
+import { getAssetUrl } from '../utils/assets';
 
 interface RulesViewProps {
   locale: Locale;
