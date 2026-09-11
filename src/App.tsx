@@ -10,10 +10,13 @@ import { FooterSection } from './components/FooterSection';
 const RulesView = lazy(() => import('./components/RulesView').then(m => ({ default: m.RulesView })));
 const NotFoundView = lazy(() => import('./components/NotFoundView').then(m => ({ default: m.NotFoundView })));
 const CheckoutModal = lazy(() => import('./components/CheckoutModal').then(m => ({ default: m.CheckoutModal })));
+const DocView = lazy(() => import('./components/DocView').then(m => ({ default: m.DocView })));
+import { DocType } from './components/DocView';
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>('ru');
-  const [currentView, setCurrentView] = useState<'home' | 'rules' | '404'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'rules' | '404' | 'doc'>('home');
+  const [currentDocType, setCurrentDocType] = useState<DocType>('terms');
   const [initialRuleSlug, setInitialRuleSlug] = useState<string | null>(null);
 
   const [checkoutModal, setCheckoutModal] = useState<{
@@ -55,6 +58,18 @@ export default function App() {
         } else {
           setInitialRuleSlug(null);
         }
+      } else if (pathname === '/offer' || pathname === '/documents/offer') {
+        setCurrentView('doc');
+        setCurrentDocType('offer');
+      } else if (pathname === '/terms') {
+        setCurrentView('doc');
+        setCurrentDocType('terms');
+      } else if (pathname === '/privacy') {
+        setCurrentView('doc');
+        setCurrentDocType('privacy');
+      } else if (pathname === '/consent') {
+        setCurrentView('doc');
+        setCurrentDocType('consent');
       } else if (pathname === '/404') {
         setCurrentView('404');
         setInitialRuleSlug(null);
@@ -76,6 +91,19 @@ export default function App() {
 
   const handleSelectPlan = (plan: StoreItem) => {
     setCheckoutModal({ isOpen: true, plan });
+  };
+
+  const handleOpenDoc = (type: DocType) => {
+    try {
+      if (window.location.pathname !== `/${type}`) {
+        window.history.pushState({ view: 'doc', type }, '', `/${type}`);
+      }
+    } catch {
+      // ignore
+    }
+    setCurrentDocType(type);
+    setCurrentView('doc');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const handleOpenRules = (slug?: string) => {
@@ -106,7 +134,7 @@ export default function App() {
   };
 
   const handleGoToStore = () => {
-    if (currentView === 'rules' || currentView === '404') {
+    if (currentView === 'rules' || currentView === '404' || currentView === 'doc') {
       handleBackToHome();
       setTimeout(() => {
         const elem = document.getElementById('store');
@@ -133,7 +161,32 @@ export default function App() {
 
       <div className="relative z-10">
         <AnimatePresence mode="wait">
-          {currentView === 'rules' ? (
+          {currentView === 'doc' ? (
+            <motion.div
+              key="doc-view"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              <Suspense
+                fallback={
+                  <div className="min-h-screen flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
+                  </div>
+                }
+              >
+                <DocView
+                  type={currentDocType}
+                  locale={locale}
+                  setLocale={setLocale}
+                  onBackToHome={handleBackToHome}
+                  onOpenRules={() => handleOpenRules()}
+                  onGoToStore={handleGoToStore}
+                />
+              </Suspense>
+            </motion.div>
+          ) : currentView === 'rules' ? (
             <motion.div
               key="rules-view"
               initial={{ opacity: 0, y: 8 }}
@@ -210,6 +263,7 @@ export default function App() {
                 locale={locale}
                 onOpenDocs={() => handleOpenRules()}
                 onGoToStore={handleGoToStore}
+                onOpenDoc={handleOpenDoc}
               />
             </motion.div>
           )}

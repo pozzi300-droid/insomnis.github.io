@@ -6,9 +6,19 @@ interface FooterSectionProps {
   locale?: Locale;
   onOpenDocs?: () => void;
   onGoToStore?: () => void;
+  onOpenDoc?: (type: 'offer' | 'terms' | 'privacy' | 'consent') => void;
 }
 
-export const FooterSection: React.FC<FooterSectionProps> = () => {
+export const FooterSection: React.FC<FooterSectionProps> = ({ onOpenDoc }) => {
+  const handleDocClick = (e: React.MouseEvent, type: 'offer' | 'terms' | 'privacy' | 'consent') => {
+    e.preventDefault();
+    if (onOpenDoc) {
+      onOpenDoc(type);
+    } else {
+      window.location.href = `/${type}`;
+    }
+  };
+
   return (
     <footer className="relative px-6 lg:px-22 mx-auto max-w-[110rem] size-full pt-20 lg:pt-30 pb-0 overflow-hidden">
       <div className="flex flex-col gap-14 relative z-10">
@@ -44,28 +54,6 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
                   </span>
                 </div>
               </div>
-              <div className="font-jacobs text-[12px] text-white/40 flex gap-2 items-center">
-                <span>
-                  Дизайн и разработка от{' '}
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://discord.com/users/wexdami"
-                    className="bg-gradient-to-r from-cyan-300 to-sky-300 bg-clip-text text-transparent hover:brightness-115 smooth"
-                  >
-                    <span className="underline underline-offset-2">@wexdami</span>
-                  </a>
-                </span>
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href="https://discord.com/users/wexdami"
-                  className="flex cursor-pointer hover:brightness-115 smooth text-white"
-                  aria-label="Discord: @wexdami"
-                >
-                  <span className="icon-[iconoir--spark-solid] size-3.5 bg-gradient-to-r from-cyan-300 to-sky-300 -skew-x-12 grayscale-25"></span>
-                </a>
-              </div>
             </div>
           </div>
 
@@ -82,14 +70,6 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
               <span className="icon-[iconoir--discord] size-4"></span> Discord сервер
             </a>
             <a
-              href="https://my.insomnis.fun/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
-            >
-              <span className="icon-[iconoir--settings] size-4"></span> Панель управления
-            </a>
-            <a
               href="https://map.insomnis.fun"
               target="_blank"
               rel="noreferrer"
@@ -104,27 +84,29 @@ export const FooterSection: React.FC<FooterSectionProps> = () => {
               Документы
             </h2>
             <a
-              href="/documents/публичная_офферта.pdf"
-              target="_blank"
-              rel="noreferrer"
+              href="/offer"
+              onClick={(e) => handleDocClick(e, 'offer')}
               className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
               <span className="icon-[iconoir--open-book] size-4"></span> Договор-оферта
             </a>
             <a
               href="/terms"
+              onClick={(e) => handleDocClick(e, 'terms')}
               className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
               <span className="icon-[iconoir--book] size-4"></span> Условия использования
             </a>
             <a
               href="/privacy"
+              onClick={(e) => handleDocClick(e, 'privacy')}
               className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
               <span className="icon-[iconoir--lock] size-4"></span> Политика конфиденциальности
             </a>
             <a
               href="/consent"
+              onClick={(e) => handleDocClick(e, 'consent')}
               className="flex gap-3 hover:bg-white/10 px-2 hover:py-1.5 hover:rounded-lg hover:-my-1.5 items-center font-jacobs text-white/60 text-[12px] hover:text-white smooth text-left cursor-pointer pl-2"
             >
               <span className="icon-[iconoir--check] size-4"></span> Согласие на обработку данных

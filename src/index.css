@@ -360,7 +360,8 @@ html.lenis, html.lenis body {
 
 /* Unified, seamless decorative background pattern across all cards and hero panels */
 .insomnis-decor-img,
-.insomnis-card-pattern {
+.insomnis-card-pattern,
+.rionix-card-pattern {
   position: absolute;
   inset: 0;
   width: 100%;

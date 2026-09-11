@@ -120,20 +120,19 @@ export const RulesView: React.FC<RulesViewProps> = ({
   }, [categories, filteredSections]);
 
   const renderSidebar = () => (
-    <div className="relative flex flex-col gap-1.5 min-w-0 p-5 rounded-[32px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_32px)] bg-[#07090e]/60 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
-      {/* Rionix card background pattern image */}
-      <img
-        src="/illustrations/main.avif"
-        className="rionix-card-pattern"
-        aria-hidden="true"
-        alt=""
-      />
-      {/* Ambient glows and noise (noise reduced by 50% from 0.7 to 0.35) */}
-      <div data-decor className="absolute inset-0 z-[1] pointer-events-none select-none" aria-hidden="true">
-        <div className="absolute w-60 h-60 -left-16 -top-16 bg-blue-500/25 rounded-full opacity-55 blur-[75px]" />
+    <div className="relative flex flex-col gap-1.5 min-w-0 p-5 rounded-[32px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_32px)] bg-[#07090e]/75 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+      {/* Insomnis card background pattern image & atmospheric glows */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none rounded-[inherit]" aria-hidden="true">
+        <img
+          src="/illustrations/main.avif"
+          className="insomnis-card-pattern"
+          aria-hidden="true"
+          alt=""
+        />
+        <div className="absolute w-60 h-60 -left-16 -top-16 bg-blue-500/20 rounded-full opacity-40 blur-[75px]" />
+        <div className="noise absolute inset-0 z-[2] opacity-25 pointer-events-none select-none" />
+        <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
       </div>
-      <div className="noise absolute inset-0 z-[2] opacity-35 pointer-events-none select-none" aria-hidden="true"></div>
-      <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
 
       <div className="relative z-10 flex flex-col gap-1.5 min-w-0">
         {/* Back Button */}
@@ -197,21 +196,20 @@ export const RulesView: React.FC<RulesViewProps> = ({
   );
 
   const renderArticle = () => (
-    <article className="relative w-full p-6 sm:p-10 rounded-[36px] sm:rounded-[40px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_40px)] bg-[#07090e]/60 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
-      {/* Rionix card background pattern image */}
-      <img
-        src="/illustrations/main.avif"
-        className="rionix-card-pattern"
-        aria-hidden="true"
-        alt=""
-      />
-      {/* Ambient glows and noise (noise reduced by 50% from 0.7 to 0.35) */}
-      <div data-decor className="absolute inset-0 z-[1] pointer-events-none select-none" aria-hidden="true">
-        <div className="absolute w-80 h-80 -left-20 -top-20 bg-blue-500/25 rounded-full opacity-55 blur-[90px]" />
-        <div className="absolute w-80 h-80 -right-20 -bottom-20 bg-sky-500/20 rounded-full opacity-55 blur-[90px]" />
+    <article className="relative w-full p-6 sm:p-10 rounded-[36px] sm:rounded-[40px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_40px)] bg-[#07090e]/75 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+      {/* Insomnis card background pattern image & atmospheric glows */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none rounded-[inherit]" aria-hidden="true">
+        <img
+          src="/illustrations/main.avif"
+          className="insomnis-card-pattern"
+          aria-hidden="true"
+          alt=""
+        />
+        <div className="absolute w-80 h-80 -left-20 -top-20 bg-blue-500/20 rounded-full opacity-40 blur-[90px]" />
+        <div className="absolute w-80 h-80 -right-20 -bottom-20 bg-sky-500/15 rounded-full opacity-35 blur-[90px]" />
+        <div className="noise absolute inset-0 z-[2] opacity-25 pointer-events-none select-none" />
+        <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
       </div>
-      <div className="noise absolute inset-0 z-[2] opacity-35 pointer-events-none select-none" aria-hidden="true" />
-      <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
 
       <div className="relative z-10">
         {/* Breadcrumbs */}
@@ -308,14 +306,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
   );
 
   return (
-    <div className="min-h-screen lg:h-screen lg:overflow-hidden relative bg-black text-white antialiased font-jacobs flex flex-col">
-      {/* Ambient glow with exact noise */}
-      <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
-        <div className="absolute size-[550px] -left-32 top-20 bg-blue-500/15 grayscale-40 rounded-full blur-[140px]" />
-        <div className="absolute size-[550px] -right-32 bottom-20 bg-sky-500/15 grayscale-40 rounded-full blur-[140px]" />
-      </div>
-      <div className="noise fixed inset-0 pointer-events-none select-none z-[1] opacity-60" aria-hidden="true" />
-
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden relative text-white antialiased font-jacobs flex flex-col">
       {/* Floating Pill Navbar */}
       <div className="relative z-50 shrink-0">
         <Navbar
