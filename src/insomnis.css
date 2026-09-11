@@ -1,0 +1,39 @@
+/* Insomnis Global Stylesheet */
+@layer theme {
+  :root {
+    --font-jacobs: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --color-insomnis-900: #000000;
+  }
+}
+
+.insomnis-card-pattern,
+.insomnis-decor-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1);
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.insomnis-pattern-card-1,
+.insomnis-pattern-card-2,
+.insomnis-pattern-card-3,
+.insomnis-pattern-card-4 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1);
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}

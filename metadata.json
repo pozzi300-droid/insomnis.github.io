@@ -1,6 +1,6 @@
 {
   "name": "Insomnis",
-  "description": "Официальный сайт лучшего ванильного Minecraft сервера — Insomnis. Бессонница привела тебя к нам.",
+  "description": "идеальный ванильный сервер для выживания",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

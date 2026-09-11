@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,8 +15,6 @@ import {
 import { Locale } from '../types';
 import { RULES_DATA, RULE_CATEGORIES, RuleSection } from '../data/rulesData';
 import { Navbar } from './Navbar';
-import { DeltaLogo } from './DeltaLogo';
-import { getAssetUrl } from '../utils/assets';
 
 interface RulesViewProps {
   locale: Locale;
@@ -47,6 +45,7 @@ export const RulesView: React.FC<RulesViewProps> = ({
   const [selectedSlug, setSelectedSlug] = useState<string>(initialSlug || allSections[0]?.slug || 'general');
   const [searchQuery, setSearchQuery] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const articleScrollRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (initialSlug) {
@@ -72,7 +71,14 @@ export const RulesView: React.FC<RulesViewProps> = ({
   }, [allSections, searchQuery]);
 
   const activeSection = useMemo(() => {
-    return allSections.find((s) => s.slug === selectedSlug) || allSections[0];
+    return allSections.find((s) => s.slug === selectedSlug) || allSections[0] || {
+      id: 'section-1',
+      number: 1,
+      slug: 'general',
+      category: 'core' as const,
+      title: '1. Основные положения',
+      points: []
+    };
   }, [allSections, selectedSlug]);
 
   const currentIndex = useMemo(() => {
@@ -89,6 +95,9 @@ export const RulesView: React.FC<RulesViewProps> = ({
     const targetPath = `/rules/${slug}`;
     if (window.location.pathname !== targetPath) {
       window.history.pushState(null, '', targetPath);
+    }
+    if (articleScrollRef.current) {
+      articleScrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -110,189 +119,205 @@ export const RulesView: React.FC<RulesViewProps> = ({
     }).filter((c) => c.links.length > 0);
   }, [categories, filteredSections]);
 
-  // Sidebar component matching deltaclient docs layout-eadb2d2fdf5d7e7e.js
   const renderSidebar = () => (
-    <div className="flex flex-col gap-1.5 min-w-0">
-      {/* Back Button */}
-      <button
-        className="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[13px] font-display text-white/30 hover:text-white/50 transition-colors duration-200 mb-2 cursor-pointer"
-        onClick={onBackToHome}
-      >
-        <ArrowLeft size={14} strokeWidth={1.5} />
-        <span>{locale === 'en' ? 'Back' : locale === 'ua' ? 'Назад' : 'Назад'}</span>
-      </button>
-
-      {/* Search Bar */}
-      <div className="flex items-center gap-2.5 px-3.5 py-2.5 mb-5 rounded-full border border-white/[0.06] bg-white/[0.02] w-full max-w-[260px] md:w-[190px]">
-        <Search className="text-white/25 flex-shrink-0" size={14} strokeWidth={1.5} />
-        <input
-          className="flex-1 min-w-0 bg-transparent text-[13px] text-white/70 font-display placeholder:text-white/25 outline-none"
-          placeholder={locale === 'en' ? 'Search...' : locale === 'ua' ? 'Пошук...' : 'Поиск...'}
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+    <div className="relative flex flex-col gap-1.5 min-w-0 p-5 rounded-[32px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_32px)] bg-[#07090e]/60 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+      {/* Rionix card background pattern image */}
+      <img
+        src="/illustrations/main.avif"
+        className="rionix-card-pattern"
+        aria-hidden="true"
+        alt=""
+      />
+      {/* Ambient glows and noise (noise reduced by 50% from 0.7 to 0.35) */}
+      <div data-decor className="absolute inset-0 z-[1] pointer-events-none select-none" aria-hidden="true">
+        <div className="absolute w-60 h-60 -left-16 -top-16 bg-blue-500/25 rounded-full opacity-55 blur-[75px]" />
       </div>
+      <div className="noise absolute inset-0 z-[2] opacity-35 pointer-events-none select-none" aria-hidden="true"></div>
+      <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
 
-      {/* Categories & Links */}
-      {categoriesWithLinks.map((cat) => {
-        const Icon = cat.icon;
-        return (
-          <div key={cat.id} className="mb-2">
-            <div className="flex items-center gap-2 px-3 mb-1">
-              <Icon className="text-white/25" size={14} strokeWidth={1.5} />
-              <span className="text-[12px] font-display font-medium text-white/25 uppercase tracking-[0.08em]">
-                {cat.title}
-              </span>
+      <div className="relative z-10 flex flex-col gap-1.5 min-w-0">
+        {/* Back Button */}
+        <button
+          className="flex items-center gap-2 px-3 py-2 rounded-[12px] text-[13px] font-jacobs text-white/50 hover:text-white transition-colors duration-200 mb-2 cursor-pointer w-fit"
+          onClick={onBackToHome}
+        >
+          <ArrowLeft size={14} strokeWidth={1.5} />
+          <span>{locale === 'en' ? 'Back to Home' : locale === 'ua' ? 'На головну' : 'На главную'}</span>
+        </button>
+
+        {/* Search Bar */}
+        <div className="flex items-center gap-2.5 px-3.5 py-2.5 mb-4 rounded-full border border-white/[0.08] bg-white/[0.03] w-full">
+          <Search className="text-white/40 flex-shrink-0" size={14} strokeWidth={1.5} />
+          <input
+            className="flex-1 min-w-0 bg-transparent text-[13px] text-white/90 font-jacobs placeholder:text-white/30 outline-none"
+            placeholder={locale === 'en' ? 'Search rules...' : locale === 'ua' ? 'Пошук у правилах...' : 'Поиск по правилам...'}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        {/* Categories & Links */}
+        {categoriesWithLinks.map((cat) => {
+          const Icon = cat.icon;
+          return (
+            <div key={cat.id} className="mb-3">
+              <div className="flex items-center gap-2 px-3 mb-1">
+                <Icon className="text-blue-300/70" size={14} strokeWidth={1.5} />
+                <span className="text-[12px] font-jacobs font-semibold text-white/40 uppercase tracking-[0.08em]">
+                  {cat.title}
+                </span>
+              </div>
+              <div className="flex flex-col gap-0.5">
+                {cat.links.map((link) => {
+                  const isActive = selectedSlug === link.slug;
+                  return (
+                    <button
+                      key={link.slug}
+                      onClick={() => handleSelectSection(link.slug)}
+                      className={`flex items-center gap-2 px-3 py-2.5 rounded-[12px] text-[13.5px] font-jacobs transition-all duration-200 text-left cursor-pointer ${
+                        isActive ? 'text-blue-200 bg-blue-400/15 font-medium border border-blue-400/25' : 'text-white/60 hover:text-white hover:bg-white/[0.03]'
+                      }`}
+                    >
+                      <ChevronRight
+                        className={isActive ? 'text-blue-300' : 'text-white/30'}
+                        size={12}
+                        strokeWidth={2}
+                      />
+                      <span className="truncate">{link.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div className="flex flex-col">
-              {cat.links.map((link) => {
-                const isActive = selectedSlug === link.slug;
-                return (
-                  <button
-                    key={link.slug}
-                    onClick={() => handleSelectSection(link.slug)}
-                    className={`flex items-center gap-2 px-3 py-2.5 rounded-[12px] text-[14px] font-display transition-all duration-200 text-left cursor-pointer ${
-                      isActive ? 'text-[#0abab5] font-medium' : 'text-white/40 hover:text-white/60'
-                    }`}
-                  >
-                    <ChevronRight
-                      className={isActive ? 'text-[#0abab5]' : 'text-white/15'}
-                      size={12}
-                      strokeWidth={2}
-                    />
-                    <span className="truncate">{link.title}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 
-  // Article component matching deltaclient docs [slug]/page-2385537770e3f5ca.js
   const renderArticle = () => (
-    <article className="max-w-[760px]">
-      {/* Breadcrumbs */}
-      <div className="flex items-center gap-1.5 mb-6 text-[12px] font-display text-white/20">
-        <button
-          onClick={onBackToHome}
-          className="hover:text-white/40 transition-colors cursor-pointer"
-        >
-          {locale === 'en' ? 'Rules' : 'Правила'}
-        </button>
-        <ChevronRight size={10} strokeWidth={2} />
-        <span className="text-white/35 truncate">{activeSection.title}</span>
+    <article className="relative w-full p-6 sm:p-10 rounded-[36px] sm:rounded-[40px] overflow-hidden supports-[-webkit-hyphens:none]:[clip-path:inset(0_round_40px)] bg-[#07090e]/60 border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+      {/* Rionix card background pattern image */}
+      <img
+        src="/illustrations/main.avif"
+        className="rionix-card-pattern"
+        aria-hidden="true"
+        alt=""
+      />
+      {/* Ambient glows and noise (noise reduced by 50% from 0.7 to 0.35) */}
+      <div data-decor className="absolute inset-0 z-[1] pointer-events-none select-none" aria-hidden="true">
+        <div className="absolute w-80 h-80 -left-20 -top-20 bg-blue-500/25 rounded-full opacity-55 blur-[90px]" />
+        <div className="absolute w-80 h-80 -right-20 -bottom-20 bg-sky-500/20 rounded-full opacity-55 blur-[90px]" />
       </div>
+      <div className="noise absolute inset-0 z-[2] opacity-35 pointer-events-none select-none" aria-hidden="true" />
+      <div className="absolute inset-0 z-[1] bg-blue-950/15 pointer-events-none" />
 
-      {/* Main Title */}
-      <h1 className="text-[28px] font-title font-bold text-white mb-2">
-        {activeSection.title}
-      </h1>
-
-      {/* Description */}
-      {activeSection.lead && (
-        <p className="text-[15px] font-display text-white/40 font-light mb-8">
-          {activeSection.lead}
-        </p>
-      )}
-
-      {/* Divider */}
-      <div className="w-full h-px bg-white/[0.04] mb-8" />
-
-      {/* Content */}
-      <div>
-        {activeSection.points.map((point) => (
-          <div key={point.num} id={`rule-${point.num}`} className="scroll-mt-28 mb-8">
-            <h2 className="text-[20px] font-title font-semibold text-white mt-10 mb-4 flex items-baseline gap-2">
-              <span className="delta-gradient-text font-mono text-[16px] font-bold">§ {point.num}</span>
-              {point.title && <span>{point.title}</span>}
-            </h2>
-            {point.content.map((p, pIdx) => (
-              <p
-                key={pIdx}
-                className="text-[14px] font-display text-white/50 font-light leading-[1.8] mb-4"
-              >
-                {p}
-              </p>
-            ))}
-            {point.listItems && point.listItems.length > 0 && (
-              <ul className="mb-4 space-y-2 pl-4 list-disc marker:text-[#0abab5] text-[13.5px] text-white/50 font-light leading-[1.7]">
-                {point.listItems.map((li, liIdx) => (
-                  <li key={liIdx}>{li}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom Divider */}
-      <div className="w-full h-px bg-white/[0.04] mt-12 mb-6" />
-
-      {/* Prev / Next Pagination */}
-      <div className="flex items-center justify-between">
-        {prevSection ? (
+      <div className="relative z-10">
+        {/* Breadcrumbs */}
+        <div className="flex items-center gap-1.5 mb-6 text-[12px] font-jacobs text-white/30">
           <button
-            onClick={() => handleSelectSection(prevSection.slug)}
-            className="group flex items-center gap-2 text-[13px] font-display text-white/25 hover:text-white/50 transition-colors cursor-pointer"
+            onClick={onBackToHome}
+            className="hover:text-white/60 transition-colors cursor-pointer"
           >
-            <ArrowLeft
-              className="group-hover:-translate-x-0.5 transition-transform duration-200"
-              size={14}
-              strokeWidth={1.5}
-            />
-            <span>{prevSection.title}</span>
+            {locale === 'en' ? 'Home' : 'Главная'}
           </button>
-        ) : (
-          <div />
+          <ChevronRight size={10} strokeWidth={2} />
+          <span className="text-white/60 truncate">{activeSection.title}</span>
+        </div>
+
+        {/* Main Title */}
+        <h1 className="text-[28px] sm:text-[32px] font-jacobs font-bold text-white mb-2 leading-tight">
+          {activeSection.title}
+        </h1>
+
+        {/* Description */}
+        {activeSection.lead && (
+          <p className="text-[15px] sm:text-[16px] font-jacobs text-white/60 font-normal mb-8 leading-relaxed">
+            {activeSection.lead}
+          </p>
         )}
 
-        {nextSection && (
-          <button
-            onClick={() => handleSelectSection(nextSection.slug)}
-            className="group flex items-center gap-2 text-[13px] font-display text-white/25 hover:text-white/50 transition-colors cursor-pointer ml-auto"
-          >
-            <span>{nextSection.title}</span>
-            <ArrowRight
-              className="group-hover:translate-x-0.5 transition-transform duration-200"
-              size={14}
-              strokeWidth={1.5}
-            />
-          </button>
-        )}
+        {/* Divider */}
+        <div className="w-full h-px bg-white/[0.08] mb-8" />
+
+        {/* Content */}
+        <div className="space-y-8">
+          {activeSection.points.map((point) => (
+            <div key={point.num} id={`rule-${point.num}`} className="scroll-mt-28">
+              <h2 className="text-[19px] sm:text-[21px] font-jacobs font-semibold text-white mt-8 mb-4 flex items-baseline gap-2">
+                <span className="text-blue-300 font-mono text-[16px] font-bold">§ {point.num}</span>
+                {point.title && <span>{point.title}</span>}
+              </h2>
+              {point.content.map((p, pIdx) => (
+                <p
+                  key={pIdx}
+                  className="text-[14.5px] sm:text-[15px] font-jacobs text-white/70 font-normal leading-[1.8] mb-3.5"
+                >
+                  {p}
+                </p>
+              ))}
+              {point.listItems && point.listItems.length > 0 && (
+                <ul className="mb-4 space-y-2 pl-5 list-disc marker:text-blue-300 text-[14px] text-white/70 font-normal leading-[1.7]">
+                  {point.listItems.map((li, liIdx) => (
+                    <li key={liIdx}>{li}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Divider */}
+        <div className="w-full h-px bg-white/[0.08] mt-12 mb-8" />
+
+        {/* Prev / Next Pagination */}
+        <div className="flex items-center justify-between gap-4">
+          {prevSection ? (
+            <button
+              onClick={() => handleSelectSection(prevSection.slug)}
+              className="group flex items-center gap-2 text-[13.5px] font-jacobs text-white/40 hover:text-white transition-colors cursor-pointer"
+            >
+              <ArrowLeft
+                className="group-hover:-translate-x-1 transition-transform duration-200"
+                size={14}
+                strokeWidth={1.5}
+              />
+              <span className="truncate">{prevSection.title}</span>
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {nextSection && (
+            <button
+              onClick={() => handleSelectSection(nextSection.slug)}
+              className="group flex items-center gap-2 text-[13.5px] font-jacobs text-white/40 hover:text-white transition-colors cursor-pointer ml-auto"
+            >
+              <span className="truncate">{nextSection.title}</span>
+              <ArrowRight
+                className="group-hover:translate-x-1 transition-transform duration-200"
+                size={14}
+                strokeWidth={1.5}
+              />
+            </button>
+          )}
+        </div>
       </div>
     </article>
   );
 
   return (
-    <div className="min-h-screen relative bg-[#111216] text-white antialiased font-sans">
-      {/* Background layer directly from deltaclient docs layout */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <img
-          src={getAssetUrl('/images/main/hero_bg.jpeg')}
-          alt=""
-          className="w-full h-full object-cover object-[center_40%]"
-          style={{ filter: 'blur(20px)' }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to bottom, rgba(17,18,22,0.84) 0%, rgba(17,18,22,0.87) 16%, rgba(17,18,22,0.9) 36%, rgba(17,18,22,0.93) 58%, rgba(17,18,22,0.95) 80%, rgba(17,18,22,0.96) 100%)',
-          }}
-        />
-        <div
-          aria-hidden={true}
-          className="pointer-events-none absolute inset-0"
-          style={{ backgroundColor: 'rgba(0,0,0,0.18)' }}
-        />
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden relative bg-black text-white antialiased font-jacobs flex flex-col">
+      {/* Ambient glow with exact noise */}
+      <div className="fixed inset-0 z-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        <div className="absolute size-[550px] -left-32 top-20 bg-blue-500/15 grayscale-40 rounded-full blur-[140px]" />
+        <div className="absolute size-[550px] -right-32 bottom-20 bg-sky-500/15 grayscale-40 rounded-full blur-[140px]" />
       </div>
+      <div className="noise fixed inset-0 pointer-events-none select-none z-[1] opacity-60" aria-hidden="true" />
 
-      {/* Floating Pill Navbar (same on mobile and desktop) */}
-      <div className="relative z-50">
+      {/* Floating Pill Navbar */}
+      <div className="relative z-50 shrink-0">
         <Navbar
           locale={locale}
           setLocale={setLocale || (() => {})}
@@ -305,63 +330,62 @@ export const RulesView: React.FC<RulesViewProps> = ({
         />
       </div>
 
-      {/* Desktop Layout: Exactly matching deltaclient (style width: 1040, aside w-[220px], main max-w-[820px]) */}
-      <div className="relative z-10 hidden md:flex justify-center min-h-screen pt-24">
-        <div className="flex" style={{ width: 1040 }}>
-          <aside className="sticky top-24 h-[calc(100vh-6rem)] flex flex-col justify-between py-10 flex-shrink-0 overflow-y-auto overflow-x-hidden scrollbar-hide w-[220px]">
-            {renderSidebar()}
-          </aside>
-
-          <main className="flex-1 py-10 pl-10 max-w-[820px]">
-            {renderArticle()}
-          </main>
-        </div>
-      </div>
-
-      {/* Mobile Layout: Uses same floating Navbar with responsive chapter selector */}
-      <div className="md:hidden relative z-10 pt-24 px-5 pb-16">
-        {/* Quick Chapter Selector Bar */}
-        <div className="flex items-center justify-between gap-3 mb-6 px-4 py-2.5 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md">
+      {/* Unified Responsive Container for Desktop, Tablet, and Mobile */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 pt-28 lg:pt-32 pb-10 lg:pb-6 flex-1 min-h-0 flex flex-col">
+        {/* Quick Chapter Selector Bar for Mobile & Tablet (< lg) */}
+        <div className="lg:hidden flex items-center justify-between gap-3 mb-8 px-4 py-3 rounded-2xl border border-white/[0.08] bg-[#0c0d14]/90 backdrop-blur-md shadow-lg">
           <div className="flex items-center gap-2 min-w-0">
-            <Layers size={15} className="text-[#0abab5] shrink-0" />
-            <span className="text-[13px] font-display font-medium text-white/80 truncate">
+            <Layers size={16} className="text-blue-300 shrink-0" />
+            <span className="text-[14px] font-jacobs font-medium text-white/90 truncate">
               {activeSection.title}
             </span>
           </div>
           <button
             onClick={() => setMobileOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-[12px] font-medium text-white/90 transition-colors shrink-0 cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-400/20 hover:bg-blue-400/30 text-[13px] font-medium text-blue-200 transition-colors shrink-0 cursor-pointer border border-blue-400/30"
           >
             <Menu size={14} />
             <span>{locale === 'en' ? 'Sections' : locale === 'ua' ? 'Розділи' : 'Разделы'}</span>
           </button>
         </div>
 
-        {/* Modal / Drawer for rules navigation on mobile */}
+        {/* Modal / Drawer for rules navigation on mobile & tablet */}
         {mobileOpen && (
-          <div className="fixed inset-0 z-50 bg-[#111216]/95 backdrop-blur-2xl p-5 overflow-y-auto">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/[0.06]">
-              <div className="flex items-center gap-2">
-                <DeltaLogo size={18} />
-                <span className="text-[14px] font-title font-semibold text-white/90">
-                  {locale === 'en' ? 'Rule Sections' : locale === 'ua' ? 'Розділи правил' : 'Разделы правил'}
-                </span>
-              </div>
+          <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl p-6 overflow-y-auto">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.08] max-w-lg mx-auto">
+              <span className="text-[16px] font-jacobs font-semibold text-white">
+                {locale === 'en' ? 'Rule Sections' : locale === 'ua' ? 'Розділи правил' : 'Разделы правил'}
+              </span>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="p-1.5 rounded-full bg-white/[0.06] text-white/60 hover:text-white transition-colors cursor-pointer"
+                className="p-2 rounded-full bg-white/[0.08] text-white/70 hover:text-white transition-colors cursor-pointer"
               >
-                <X size={18} />
+                <X size={20} />
               </button>
             </div>
-            {renderSidebar()}
+            <div className="max-w-lg mx-auto">
+              {renderSidebar()}
+            </div>
           </div>
         )}
 
-        <main>
-          {renderArticle()}
-        </main>
+        {/* Two-column layout on Desktop (lg:), single column on Tablet/Mobile */}
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start flex-1 min-h-0">
+          {/* Desktop Left Sidebar: Stationary list of sections */}
+          <aside className="hidden lg:flex flex-col w-72 shrink-0 h-full overflow-y-auto pr-3 scrollbar-hide pb-6">
+            {renderSidebar()}
+          </aside>
+
+          {/* Main Article Content: Independent scroll area */}
+          <main
+            ref={articleScrollRef}
+            className="flex-1 min-w-0 w-full max-w-3xl lg:h-full lg:overflow-y-auto lg:pr-6 pb-16 custom-scrollbar"
+          >
+            {renderArticle()}
+          </main>
+        </div>
       </div>
     </div>
   );
 };
+

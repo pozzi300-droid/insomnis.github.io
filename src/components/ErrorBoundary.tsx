@@ -29,9 +29,9 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#111216] text-white flex flex-col items-center justify-center p-6 text-center">
+        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 text-center">
           <div className="max-w-md w-full bg-[#181a20] p-8 rounded-2xl border border-white/10 shadow-2xl">
-            <h1 className="text-xl font-bold text-[#0abab5] mb-2">Произошла ошибка загрузки</h1>
+            <h1 className="text-xl font-bold text-blue-300 mb-2">Произошла ошибка загрузки</h1>
             <p className="text-white/60 text-sm mb-6">
               {this.state.error?.message || 'Не удалось отобразить компонент.'}
             </p>
@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 this.setState({ hasError: false, error: null });
                 window.location.reload();
               }}
-              className="px-6 py-2.5 bg-[#0abab5] hover:bg-[#099e9a] text-white font-bold rounded-xl text-sm transition-all"
+              className="px-6 py-2.5 bg-blue-300 hover:bg-blue-200 text-black font-bold rounded-xl text-sm transition-all"
             >
               Перезагрузить страницу
             </button>

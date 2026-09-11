@@ -44,7 +44,7 @@ export interface PlanOption {
 }
 
 export interface StoreItem {
-  id: number;
+  id: number | string;
   name: string;
   price: string;
   rawPrice: number;

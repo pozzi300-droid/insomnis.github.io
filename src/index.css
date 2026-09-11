@@ -41,7 +41,10 @@
   font-display: swap;
 }
 
-.font-jacobs {
+.font-jacobs,
+.font-sans,
+.font-display,
+.font-title {
   font-family: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -185,38 +188,65 @@
 }
 
 @theme {
-  --font-sans: 'Suisse Intl', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Suisse Intl', system-ui, sans-serif;
-  --font-title: 'Suisse Intl', system-ui, sans-serif;
-  --color-delta-900: #111216;
-  --color-insomnis-900: #111216;
-  --color-primary-300: #6fe7e1;
-  --color-primary-400: #30ded5;
-  --color-primary-500: #0abab5;
-  --color-primary-600: #099e9a;
-  --color-primary-700: #077a76;
+  --font-sans: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-title: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-jacobs: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-delta-900: #000000;
+  --color-insomnis-900: #000000;
+  --color-primary-300: #a5f3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #06b6d4;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
 }
 
 :root {
-  --color-primary: #0abab5;
-  --color-primary-300: #6fe7e1;
-  --color-primary-400: #30ded5;
-  --color-primary-500: #0abab5;
-  --color-primary-600: #099e9a;
-  --color-primary-700: #077a76;
-  --primary: #0abab5;
-  --primary-rgb: 10, 186, 181;
-  --color-delta-900: #111216;
-  --color-insomnis-900: #111216;
-  --background: #111216;
+  font-family: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --color-primary: #06b6d4;
+  --color-primary-300: #a5f3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #06b6d4;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --primary: #06b6d4;
+  --primary-rgb: 6, 182, 212;
+  --color-delta-900: #000000;
+  --color-insomnis-900: #000000;
+  --background: #000000;
   --foreground: #fafafa;
 }
 
-html, body {
-  font-family: 'Suisse Intl', system-ui, -apple-system, sans-serif;
-  background-color: #111216;
+html, body, #root {
+  font-family: 'Jacobs', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #000000;
   color: #fafafa;
   overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+*, ::after, ::before, button, input, textarea, select {
+  font-family: inherit;
 }
 
 /* Delta animations */
@@ -238,13 +268,13 @@ html, body {
 }
 
 .auth-input:focus-within {
-  border-color: rgba(10, 186, 181, 0.45) !important;
+  border-color: rgba(244, 114, 182, 0.45) !important;
   background-color: rgba(255, 255, 255, 0.07) !important;
-  box-shadow: 0 0 20px rgba(10, 186, 181, 0.15);
+  box-shadow: 0 0 20px rgba(244, 114, 182, 0.15);
 }
 
 .auth-input:focus-within .input-icon {
-  color: #0abab5 !important;
+  color: #f472b6 !important;
 }
 
 @keyframes gradientShift {
@@ -257,22 +287,18 @@ html, body {
 .insomnis-gradient-text,
 .pride-gradient-text {
   background: linear-gradient(
-    135deg,
-    var(--color-primary-700),
-    var(--color-primary),
-    var(--color-primary-300),
-    var(--color-primary),
-    var(--color-primary-700)
+    90deg,
+    #f472b6 0%,
+    #fda4af 50%,
+    #fb7185 100%
   );
-  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientShift 6s ease infinite;
 }
 
 .pride-gradient-bg {
-  background: #0abab5;
+  background: linear-gradient(to right, #f472b6, #fda4af);
 }
 
 @keyframes shimmerSlide {
@@ -309,7 +335,7 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #111216;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -320,3 +346,100 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(10, 186, 181, 0.5);
 }
+
+
+/* Insomnis Background Textures & Atmosphere */
+
+.noise {
+  mix-blend-mode: soft-light;
+  image-rendering: pixelated;
+  background-image: url(/materials/noise-96.png);
+  background-repeat: repeat;
+  background-size: 96px 96px;
+}
+
+/* Unified, seamless decorative background pattern across all cards and hero panels */
+.insomnis-decor-img,
+.insomnis-card-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1);
+  opacity: 0.14;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Unified stat card patterns with balanced, consistent composition across mobile and desktop */
+.insomnis-pattern-card-1,
+.insomnis-pattern-card-2,
+.insomnis-pattern-card-3,
+.insomnis-pattern-card-4 {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1);
+  opacity: 0.13;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .insomnis-decor-img,
+  .insomnis-card-pattern {
+    opacity: 0.12;
+  }
+  .insomnis-pattern-card-1,
+  .insomnis-pattern-card-2,
+  .insomnis-pattern-card-3,
+  .insomnis-pattern-card-4 {
+    opacity: 0.12;
+  }
+}
+
+@media (min-width: 1024px) {
+  .insomnis-decor-img,
+  .insomnis-card-pattern {
+    opacity: 0.11;
+  }
+  .insomnis-pattern-card-1,
+  .insomnis-pattern-card-2,
+  .insomnis-pattern-card-3,
+  .insomnis-pattern-card-4 {
+    opacity: 0.11;
+  }
+}
+
+.icon-[iconoir--activity],.icon-[iconoir--arrow-right]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--arrow-right\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M3 12h18m0 0-8.5-8.5M21 12l-8.5 8.5'/%3E%3C/svg%3E")}
+.icon-\[iconoir--book\],.icon-\[iconoir--brain\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--brain\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M7 14a3 3 0 1 0 1 5.83'/%3E%3Cpath d='M4.264 15.605a4 4 0 0 1-.874-6.636m.03-.081A2.5 2.5 0 0 1 7 5.5m.238.065A2.5 2.5 0 1 1 12 4.5V20m-4 0a2 2 0 1 0 4 0m0-13a3 3 0 0 0 3 3m2 4a3 3 0 1 1-1 5.83'/%3E%3Cpath d='M19.736 15.605a4 4 0 0 0 .874-6.636m-.03-.081A2.5 2.5 0 0 0 17 5.5m-5-1a2.5 2.5 0 1 1 4.762 1.065M16 20a2 2 0 1 1-4 0'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--calendar\],.icon-\[iconoir--cart\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--cart\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath fill='%23000' d='M19.5 22a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3'/%3E%3Cpath d='M5 4h17l-2 11H7zm0 0c-.167-.667-1-2-3-2m18 13H5.23c-1.784 0-2.73.781-2.73 2s.946 2 2.73 2H19.5'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--check\],.icon-\[iconoir--code\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--code\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M13.5 6 10 18.5m-3.5-10L3 12l3.5 3.5m11-7L21 12l-3.5 3.5'/%3E%3C/svg%3E")}
+.icon-\[iconoir--cpu\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M8 15.4V8.6a.6.6 0 0 1 .6-.6h6.8a.6.6 0 0 1 .6.6v6.8a.6.6 0 0 1-.6.6H8.6a.6.6 0 0 1-.6-.6'/%3E%3Cpath d='M20 4.6v14.8a.6.6 0 0 1-.6.6H4.6a.6.6 0 0 1-.6-.6V4.6a.6.6 0 0 1 .6-.6h14.8a.6.6 0 0 1 .6.6M17 4V2m-5 2V2M7 4V2m0 18v2m5-2v2m5-2v2m3-5h2m-2-5h2m-2-5h2M4 17H2m2-5H2m2-5H2'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--cpu\],.icon-\[iconoir--dashboard-speed\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--dashboard-speed\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M12 4v4M4 8l2.5 2.5m11 0L20 8M3 17h3m6 0 1-6m5 6h3M8.5 20.001H4A9.96 9.96 0 0 1 2 14C2 8.477 6.477 4 12 4s10 4.477 10 10c0 2.252-.744 4.33-2 6.001L15.5 20'/%3E%3Cpath d='M12 23a3 3 0 1 0 0-6 3 3 0 0 0 0 6'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--database\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M5 12v6s0 3 7 3 7-3 7-3v-6'/%3E%3Cpath d='M5 6v6s0 3 7 3 7-3 7-3V6'/%3E%3Cpath d='M12 3c7 0 7 3 7 3s0 3-7 3-7-3-7-3 0-3 7-3Z'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--database\],.icon-\[iconoir--discord\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--flash\],.icon-\[iconoir--gamepad\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--gamepad\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M17.5 17.5c2.5 3.5 6.449.915 5.5-2.5-1.425-5.129-2.2-7.984-2.603-9.492A2.03 2.03 0 0 0 18.438 4H5.562c-.918 0-1.718.625-1.941 1.515C2.78 8.863 2.033 11.802 1.144 15c-.948 3.415 3 6 5.5 2.5M18 8.5l.011.01M16.49 7l.011.01M16.49 10l.011.01M15 8.5l.011.01M7 7v3M5.5 8.5h3'/%3E%3Cpath d='M8 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4m8 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--globe\],.icon-\[iconoir--hard-drive\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--hard-drive\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m10 17.01.01-.011M6 17.01l.01-.011'/%3E%3Cpath d='M2 13v7.4a.6.6 0 0 0 .6.6h18.8a.6.6 0 0 0 .6-.6V13M2 13h20M2 13l2.872-9.572A.6.6 0 0 1 5.446 3h13.108a.6.6 0 0 1 .574.428L22 13'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--menu\],.icon-\[iconoir--network-alt\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--network-alt\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.5'%3E%3Crect width='7' height='5' rx='.6' transform='matrix(1 0 0 -1 3 22)'/%3E%3Crect width='7' height='5' rx='.6' transform='matrix(1 0 0 -1 8.5 7)'/%3E%3Crect width='7' height='5' rx='.6' transform='matrix(1 0 0 -1 14 22)'/%3E%3Cpath d='M6.5 17v-3.5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2V17M12 11.5V7'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--refresh\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='M21.888 13.5C21.164 18.311 17.013 22 12 22 6.477 22 2 17.523 2 12S6.477 2 12 2c4.1 0 7.625 2.468 9.168 6'/%3E%3Cpath d='M17 8h4.4a.6.6 0 0 0 .6-.6V3'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--refresh\],.icon-\[iconoir--rss-feed\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.icon-\[iconoir--shield-check\]{--svg:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'%3E%3Cpath d='m8.5 11.5 3 3 5-5'/%3E%3Cpath d='M5 18 3.13 4.913a.996.996 0 0 1 .774-1.114l7.662-1.703a2 2 0 0 1 .868 0L20.096 3.8c.51.113.848.596.774 1.114L19 18c-.07.495-.5 3.5-7 3.5S5.07 18.495 5 18'/%3E%3C/g%3E%3C/svg%3E")}
+.icon-\[iconoir--shield-check\],.icon-\[iconoir--spark-solid\]{width:1em;height:1em;-webkit-mask-image:var(--svg);mask-image:var(--svg);background-color:currentColor;display:inline-block;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
